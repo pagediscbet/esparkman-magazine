@@ -1,0 +1,85 @@
+---
+const navLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Church Directory', href: '/church-directory' },
+  { label: 'Testimonies', href: '/testimonies' },
+  { label: 'Literacy Bookshelf', href: '/literacy-bookshelf' },
+  { label: 'Job Talk', href: '/job-talk' },
+  { label: 'Community Care', href: '/community-care' },
+  { label: 'Contact', href: '/contact' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav aria-label="Main navigation">
+  <!-- Desktop nav -->
+  <ul class="hidden lg:flex items-center gap-6">
+    {navLinks.map(link => (
+      <li>
+        <a
+          href={link.href}
+          class="text-sm font-medium transition-colors hover:text-[var(--color-gold)]"
+          style={currentPath === link.href ? 'color: var(--color-gold);' : 'color: var(--color-white);'}
+          aria-current={currentPath === link.href ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <!-- Mobile hamburger -->
+  <button
+    id="mobile-menu-btn"
+    class="lg:hidden p-2 rounded"
+    style="color: var(--color-white);"
+    aria-label="Open menu"
+    aria-expanded="false"
+    aria-controls="mobile-menu"
+  >
+    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+  </button>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="hidden lg:hidden absolute top-full left-0 w-full shadow-lg z-50"
+    style="background-color: var(--color-black);"
+  >
+    <ul class="flex flex-col py-4">
+      {navLinks.map(link => (
+        <li>
+          <a
+            href={link.href}
+            class="block px-6 py-3 text-sm font-medium transition-colors hover:text-[var(--color-gold)] hover:bg-[var(--color-charcoal)]"
+            style="color: var(--color-white);"
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+      <li class="px-6 py-3">
+        <a
+          href="/contact#subscribe"
+          class="block text-center py-2 px-4 rounded font-semibold text-sm"
+          style="background-color: var(--color-gold); color: var(--color-black);"
+        >
+          Subscribe Now
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  btn?.addEventListener('click', () => {
+    const isOpen = menu?.classList.toggle('hidden') === false;
+    btn.setAttribute('aria-expanded', String(isOpen));
+  });
+</script>

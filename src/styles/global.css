@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
+@import "tailwindcss";
+@import "./tokens.css";
+
+/* Base */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-cream);
+  color: var(--color-black);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}

@@ -1,0 +1,39 @@
+---
+import Nav from './Nav.astro';
+---
+
+<header
+  class="sticky top-0 z-40 w-full"
+  style="background-color: var(--color-black); border-bottom: 2px solid var(--color-gold);"
+>
+  <div
+    class="relative flex items-center justify-between px-6 py-3 mx-auto"
+    style="max-width: var(--max-width);"
+  >
+    <!-- Logo -->
+    <a href="/" class="flex-shrink-0" aria-label="E-Sparkman Magazine home">
+      <!-- Replace with actual logo image when available -->
+      <div
+        class="text-2xl font-bold tracking-tight"
+        style="font-family: var(--font-display); color: var(--color-gold);"
+      >
+        E-Sparkman
+        <span class="text-sm font-normal block leading-none" style="color: var(--color-white);">
+          Magazine
+        </span>
+      </div>
+    </a>
+
+    <!-- Navigation -->
+    <Nav />
+
+    <!-- Subscribe CTA (desktop only) -->
+    <a
+      href="/contact#subscribe"
+      class="hidden lg:inline-block py-2 px-5 rounded font-semibold text-sm transition-colors hover:opacity-90 flex-shrink-0"
+      style="background-color: var(--color-gold); color: var(--color-black);"
+    >
+      Subscribe Now
+    </a>
+  </div>
+</header>

@@ -1,0 +1,111 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer style="background-color: var(--color-black); color: var(--color-white);">
+
+  <!-- Main footer content -->
+  <div
+    class="mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-12"
+    style="max-width: var(--max-width);"
+  >
+
+    <!-- Brand column -->
+    <div>
+      <div
+        class="text-2xl font-bold mb-4"
+        style="font-family: var(--font-display); color: var(--color-gold);"
+      >
+        E-Sparkman Magazine
+      </div>
+      <p class="text-sm leading-relaxed mb-6" style="color: #AAA;">
+        A free digital Christian community magazine dedicated to inspiring and encouraging
+        the St. Louis area faith community. Covering mental health, employment, education,
+        and community programs since 1999.
+      </p>
+      <address class="text-sm not-italic" style="color: #AAA;">
+        1425 Purdue, St. Louis, MO 63130<br />
+        <a href="mailto:support@sparkman.com" class="hover:text-[var(--color-gold)] transition-colors">
+          support@sparkman.com
+        </a><br />
+        <a href="tel:3142857037" class="hover:text-[var(--color-gold)] transition-colors">
+          314-285-7037
+        </a>
+      </address>
+    </div>
+
+    <!-- Navigation column -->
+    <div>
+      <h3
+        class="text-sm font-semibold uppercase tracking-widest mb-4"
+        style="color: var(--color-gold);"
+      >
+        Navigate
+      </h3>
+      <ul class="space-y-2 text-sm" style="color: #AAA;">
+        {[
+          { label: 'Home', href: '/' },
+          { label: 'About', href: '/about' },
+          { label: 'Church Directory', href: '/church-directory' },
+          { label: 'Testimonies', href: '/testimonies' },
+          { label: 'Job Talk', href: '/job-talk' },
+          { label: 'Community Care', href: '/community-care' },
+          { label: 'Past Magazines', href: '/past-magazines' },
+          { label: 'Contact', href: '/contact' },
+        ].map(link => (
+          <li>
+            <a href={link.href} class="hover:text-[var(--color-gold)] transition-colors">
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Newsletter column -->
+    <div>
+      <h3
+        class="text-sm font-semibold uppercase tracking-widest mb-4"
+        style="color: var(--color-gold);"
+      >
+        Stay Connected
+      </h3>
+      <p class="text-sm mb-4" style="color: #AAA;">
+        Subscribe to receive the latest edition and community updates.
+      </p>
+      <!-- Phase 2: replace with real newsletter integration -->
+      <a
+        href="/contact#subscribe"
+        class="inline-block py-2 px-5 rounded font-semibold text-sm transition-colors hover:opacity-90"
+        style="background-color: var(--color-gold); color: var(--color-black);"
+      >
+        Subscribe Now
+      </a>
+
+      <div class="mt-8">
+        <h4 class="text-sm font-semibold mb-3" style="color: var(--color-white);">Advertise With Us</h4>
+        <p class="text-sm mb-3" style="color: #AAA;">
+          Reach the St. Louis faith community through Sparkman Magazine.
+        </p>
+        <a
+          href="/contact"
+          class="text-sm font-semibold transition-colors hover:opacity-80"
+          style="color: var(--color-gold);"
+        >
+          Learn More →
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom bar -->
+  <div
+    class="border-t px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs"
+    style="border-color: var(--color-charcoal); color: #666;"
+  >
+    <span>© {currentYear} Sparkman Magazine. All rights reserved.</span>
+    <span>Publisher: Marilyn Parker</span>
+  </div>
+
+</footer>

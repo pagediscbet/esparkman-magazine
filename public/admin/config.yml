@@ -1,0 +1,110 @@
+# Decap CMS Configuration for E-Sparkman Magazine
+# Docs: https://decapcms.org/docs/
+
+backend:
+  name: github
+  repo: pagediscbet/esparkman-magazine
+  branch: main
+
+# Allows Marilyn to preview changes before publishing
+publish_mode: editorial_workflow
+
+# Where uploaded images are stored in the repo
+media_folder: "public/images/articles"
+public_folder: "/images/articles"
+
+collections:
+
+  # ── ARTICLES ───────────────────────────────────────────────────────
+  - name: "articles"
+    label: "Articles"
+    label_singular: "Article"
+    folder: "src/content/articles"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Author Name", name: "author", widget: "string" }
+      - label: "Author Photo"
+        name: "authorImage"
+        widget: "image"
+        required: false
+        media_folder: "/public/images/articles"
+        public_folder: "/images/articles"
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Faith", value: "faith" }
+          - { label: "Job Talk", value: "job-talk" }
+          - { label: "Community Care", value: "community-care" }
+          - { label: "Testimonies", value: "testimonies" }
+          - { label: "Black History", value: "black-history" }
+          - { label: "Technology", value: "technology" }
+      - { label: "Publish Date", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Short Excerpt (1-2 sentences)", name: "excerpt", widget: "text" }
+      - label: "Hero Image"
+        name: "image"
+        widget: "image"
+        required: false
+        media_folder: "/public/images/articles"
+        public_folder: "/images/articles"
+      - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: false }
+      - { label: "Article Body", name: "body", widget: "markdown" }
+
+  # ── ADVERTISERS ────────────────────────────────────────────────────
+  - name: "advertisers"
+    label: "Advertisers"
+    label_singular: "Advertiser"
+    folder: "src/content/advertisers"
+    create: true
+    extension: "json"
+    fields:
+      - { label: "Business Name", name: "name", widget: "string" }
+      - label: "Banner Image"
+        name: "image"
+        widget: "image"
+        media_folder: "/public/images/advertisers"
+        public_folder: "/images/advertisers"
+      - { label: "Website URL", name: "url", widget: "string", hint: "Full URL including https://" }
+      - label: "Carousel Slot"
+        name: "carousel"
+        widget: "select"
+        options:
+          - { label: "Carousel 1 (top)", value: 1 }
+          - { label: "Carousel 2 (bottom)", value: 2 }
+
+  # ── PAST MAGAZINES ─────────────────────────────────────────────────
+  - name: "past-magazines"
+    label: "Past Magazines"
+    label_singular: "Magazine Edition"
+    folder: "src/content/past-magazines"
+    create: true
+    extension: "json"
+    fields:
+      - { label: "Edition Title (e.g. Black History Edition)", name: "title", widget: "string" }
+      - { label: "Edition Period (e.g. Jan/Feb 2026)", name: "edition", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - label: "Cover Image"
+        name: "coverImage"
+        widget: "image"
+        media_folder: "/public/images/magazine-covers"
+        public_folder: "/images/magazine-covers"
+      - { label: "FlipHTML5 Link", name: "flipUrl", widget: "string", hint: "The full URL from FlipHTML5 for this edition" }
+
+  # ── CHURCH DIRECTORY ───────────────────────────────────────────────
+  - name: "church-directory"
+    label: "Church Directory"
+    label_singular: "Church"
+    folder: "src/content/church-directory"
+    create: true
+    extension: "json"
+    fields:
+      - { label: "Church Name", name: "name", widget: "string" }
+      - label: "Banner Image"
+        name: "image"
+        widget: "image"
+        media_folder: "/public/images/church-directory"
+        public_folder: "/images/church-directory"
+      - { label: "Website URL (optional)", name: "url", widget: "string", required: false }

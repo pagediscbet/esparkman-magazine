@@ -1,17 +1,163 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleGrid from '../components/article/ArticleGrid.astro';
+import AdvertiserCarousel from '../components/advertiser/AdvertiserCarousel.astro';
+import { getCollection } from 'astro:content';
 
+const allArticles = await getCollection('articles');
+const allAdvertisers = await getCollection('advertisers');
+const allMagazines = await getCollection('past-magazines');
+
+const sortedArticles = allArticles.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const featuredArticles = sortedArticles.slice(0, 6);
+
+const carousel1 = allAdvertisers.filter(a => a.data.carousel === 1).map(a => a.data);
+const carousel2 = allAdvertisers.filter(a => a.data.carousel === 2).map(a => a.data);
+
+const recentMagazines = allMagazines
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 6);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Home">
+
+  <!-- Hero / Current Edition Banner -->
+  <section
+    class="py-20 text-center px-6"
+    style="background: linear-gradient(135deg, var(--color-black) 0%, var(--color-charcoal) 100%);"
+  >
+    <div class="mx-auto" style="max-width: var(--max-width);">
+      <p class="text-xs font-semibold uppercase tracking-widest mb-3" style="color: var(--color-gold);">
+        Current Edition
+      </p>
+      <h1
+        class="text-4xl md:text-6xl font-bold mb-4"
+        style="font-family: var(--font-display); color: var(--color-white);"
+      >
+        E-Sparkman Magazine
+      </h1>
+      <p class="text-lg mb-8" style="color: #AAA;">
+        Inspiring and encouraging the St. Louis faith community since 1999.
+      </p>
+      <a
+        href="/contact#subscribe"
+        class="inline-block py-3 px-8 rounded font-semibold text-sm transition-opacity hover:opacity-90"
+        style="background-color: var(--color-gold); color: var(--color-black);"
+      >
+        Subscribe Free
+      </a>
+    </div>
+  </section>
+
+  <!-- Featured Articles -->
+  <section class="py-16 px-6" style="background-color: var(--color-cream);">
+    <div class="mx-auto" style="max-width: var(--max-width);">
+      <div class="flex items-end justify-between mb-8">
+        <h2
+          class="text-3xl font-bold"
+          style="font-family: var(--font-display); color: var(--color-black);"
+        >
+          Latest Articles
+        </h2>
+        <a
+          href="/all-articles"
+          class="text-sm font-semibold transition-opacity hover:opacity-80"
+          style="color: var(--color-gold);"
+        >
+          View All →
+        </a>
+      </div>
+      {featuredArticles.length > 0 ? (
+        <ArticleGrid articles={featuredArticles} />
+      ) : (
+        <p class="text-center py-12" style="color: var(--color-gray);">
+          Articles coming soon. Check back for our next edition.
+        </p>
+      )}
+    </div>
+  </section>
+
+  <!-- Advertiser Carousel 1 -->
+  {carousel1.length > 0 && (
+    <div style="background-color: var(--color-white); border-top: 1px solid var(--color-gray-light); border-bottom: 1px solid var(--color-gray-light);">
+      <AdvertiserCarousel advertisers={carousel1} label="Community Partners" />
+    </div>
+  )}
+
+  <!-- Past Magazines Archive -->
+  <section class="py-16 px-6" style="background-color: var(--color-black);">
+    <div class="mx-auto" style="max-width: var(--max-width);">
+      <div class="flex items-end justify-between mb-8">
+        <h2
+          class="text-3xl font-bold"
+          style="font-family: var(--font-display); color: var(--color-white);"
+        >
+          Past Editions
+        </h2>
+        <a
+          href="/past-magazines"
+          class="text-sm font-semibold transition-opacity hover:opacity-80"
+          style="color: var(--color-gold);"
+        >
+          Full Archive →
+        </a>
+      </div>
+      {recentMagazines.length > 0 ? (
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          {recentMagazines.map(mag => (
+            <a
+              href={mag.data.flipUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="group block rounded overflow-hidden transition-transform hover:-translate-y-1"
+              aria-label={`Read ${mag.data.title} - ${mag.data.edition}`}
+            >
+              <img
+                src={mag.data.coverImage}
+                alt={`${mag.data.title} cover`}
+                class="w-full aspect-[3/4] object-cover"
+                loading="lazy"
+              />
+              <p class="text-xs text-center mt-2 group-hover:text-[var(--color-gold)] transition-colors" style="color: #AAA;">
+                {mag.data.edition}
+              </p>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p class="text-center py-12" style="color: #666;">Archive coming soon.</p>
+      )}
+    </div>
+  </section>
+
+  <!-- Advertiser Carousel 2 -->
+  {carousel2.length > 0 && (
+    <div style="background-color: var(--color-white); border-top: 1px solid var(--color-gray-light); border-bottom: 1px solid var(--color-gray-light);">
+      <AdvertiserCarousel advertisers={carousel2} label="Supporting Businesses" />
+    </div>
+  )}
+
+  <!-- Advertise CTA -->
+  <section class="py-16 px-6 text-center" style="background-color: var(--color-red);">
+    <div class="mx-auto" style="max-width: 640px;">
+      <h2
+        class="text-3xl font-bold mb-4"
+        style="font-family: var(--font-display); color: var(--color-white);"
+      >
+        Reach Our Community
+      </h2>
+      <p class="mb-8 text-lg" style="color: rgba(255,255,255,0.85);">
+        Advertise in E-Sparkman Magazine and connect with thousands of faith-based
+        readers across the St. Louis metro area.
+      </p>
+      <a
+        href="/contact"
+        class="inline-block py-3 px-8 rounded font-semibold text-sm transition-opacity hover:opacity-90"
+        style="background-color: var(--color-gold); color: var(--color-black);"
+      >
+        Learn More
+      </a>
+    </div>
+  </section>
+
+</BaseLayout>

@@ -1,0 +1,23 @@
+/* E-Sparkman Magazine — Brand Design Tokens */
+:root {
+  /* Colors */
+  --color-gold:       #C9A84C;
+  --color-gold-light: #E8C97A;
+  --color-gold-dark:  #A07830;
+  --color-black:      #1A1A1A;
+  --color-charcoal:   #2D2D2D;
+  --color-red:        #8B1A1A;
+  --color-red-light:  #B02222;
+  --color-cream:      #FAF6EE;
+  --color-white:      #FAFAFA;
+  --color-gray:       #6B7280;
+  --color-gray-light: #E5E7EB;
+
+  /* Typography */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'Inter', system-ui, sans-serif;
+
+  /* Spacing */
+  --max-width: 1200px;
+  --page-padding: 1.5rem;
+}

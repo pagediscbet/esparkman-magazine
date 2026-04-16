@@ -1,0 +1,103 @@
+---
+interface Advertiser {
+  name: string;
+  image: string;
+  url: string;
+}
+
+interface Props {
+  advertisers: Advertiser[];
+  label?: string;
+}
+
+const { advertisers, label = 'Our Community Partners' } = Astro.props;
+
+// Unique ID for this carousel instance (supports multiple on one page)
+const id = `carousel-${Math.random().toString(36).slice(2, 7)}`;
+---
+
+<section class="py-8" aria-label={label}>
+  <div class="mx-auto px-6" style="max-width: var(--max-width);">
+
+    <h2
+      class="text-xs font-semibold uppercase tracking-widest mb-6 text-center"
+      style="color: var(--color-gray);"
+    >
+      {label}
+    </h2>
+
+    <!-- Carousel track wrapper -->
+    <div class="relative">
+      <!-- Prev button -->
+      <button
+        data-carousel-prev={id}
+        class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-8 h-8 rounded-full flex items-center justify-center shadow transition-opacity hover:opacity-80"
+        style="background-color: var(--color-black); color: var(--color-gold);"
+        aria-label="Previous advertisers"
+      >
+        ‹
+      </button>
+
+      <!-- Scrollable track -->
+      <div
+        id={id}
+        class="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2"
+        style="scrollbar-width: none; -ms-overflow-style: none;"
+      >
+        {advertisers.map(ad => (
+          <a
+            href={ad.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex-shrink-0 snap-start rounded overflow-hidden transition-opacity hover:opacity-90"
+            style="width: 200px;"
+            aria-label={`Visit ${ad.name}`}
+          >
+            <img
+              src={ad.image}
+              alt={ad.name}
+              class="w-full h-24 object-cover"
+              loading="lazy"
+            />
+          </a>
+        ))}
+      </div>
+
+      <!-- Next button -->
+      <button
+        data-carousel-next={id}
+        class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-8 h-8 rounded-full flex items-center justify-center shadow transition-opacity hover:opacity-80"
+        style="background-color: var(--color-black); color: var(--color-gold);"
+        aria-label="Next advertisers"
+      >
+        ›
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* Hide scrollbar visually while keeping scroll functionality */
+  [id^="carousel-"]::-webkit-scrollbar {
+    display: none;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-carousel-prev]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = (btn as HTMLElement).dataset.carouselPrev!;
+      const track = document.getElementById(id);
+      if (track) track.scrollBy({ left: -220, behavior: 'smooth' });
+    });
+  });
+
+  document.querySelectorAll('[data-carousel-next]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = (btn as HTMLElement).dataset.carouselNext!;
+      const track = document.getElementById(id);
+      if (track) track.scrollBy({ left: 220, behavior: 'smooth' });
+    });
+  });
+</script>

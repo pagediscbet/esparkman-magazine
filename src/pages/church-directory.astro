@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const churches = await getCollection('church-directory');
+---
+
+<BaseLayout
+  title="Church Directory"
+  description="Discover faith communities in the St. Louis area through the E-Sparkman Church Directory."
+>
+
+  <section class="py-16 px-6" style="background-color: var(--color-cream);">
+    <div class="mx-auto" style="max-width: var(--max-width);">
+
+      <p class="text-xs font-semibold uppercase tracking-widest mb-3" style="color: var(--color-gold);">
+        Faith Community
+      </p>
+      <div class="flex items-end justify-between mb-12">
+        <h1
+          class="text-4xl font-bold"
+          style="font-family: var(--font-display); color: var(--color-black);"
+        >
+          Church Directory
+        </h1>
+        <a
+          href="/contact"
+          class="text-sm font-semibold transition-opacity hover:opacity-80"
+          style="color: var(--color-gold);"
+        >
+          Advertise Your Church →
+        </a>
+      </div>
+
+      {churches.length > 0 ? (
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          {churches.map(church => (
+            church.data.url ? (
+              <a
+                href={church.data.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="block rounded overflow-hidden shadow hover:shadow-md transition-shadow"
+                aria-label={church.data.name}
+              >
+                <img
+                  src={church.data.image}
+                  alt={church.data.name}
+                  class="w-full h-32 object-cover"
+                  loading="lazy"
+                />
+              </a>
+            ) : (
+              <div class="rounded overflow-hidden shadow">
+                <img
+                  src={church.data.image}
+                  alt={church.data.name}
+                  class="w-full h-32 object-cover"
+                  loading="lazy"
+                />
+              </div>
+            )
+          ))}
+        </div>
+      ) : (
+        <p class="text-center py-24" style="color: var(--color-gray);">
+          Church listings coming soon.
+          <a href="/contact" class="underline hover:text-[var(--color-gold)]" style="color: var(--color-gold);">
+            Contact us to be listed.
+          </a>
+        </p>
+      )}
+
+    </div>
+  </section>
+
+</BaseLayout>

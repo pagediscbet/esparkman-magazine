@@ -1,0 +1,139 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Contact"
+  description="Get in touch with E-Sparkman Magazine, subscribe to our newsletter, or learn about advertising."
+>
+
+  <section class="py-16 px-6" style="background-color: var(--color-cream);">
+    <div class="mx-auto" style="max-width: var(--max-width);">
+
+      <p class="text-xs font-semibold uppercase tracking-widest mb-3" style="color: var(--color-gold);">
+        Get In Touch
+      </p>
+      <h1
+        class="text-4xl font-bold mb-12"
+        style="font-family: var(--font-display); color: var(--color-black);"
+      >
+        Contact Us
+      </h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+
+        <!-- Contact info -->
+        <div>
+          <h2 class="text-xl font-bold mb-6" style="font-family: var(--font-display); color: var(--color-black);">
+            Reach Marilyn Parker
+          </h2>
+          <address class="not-italic space-y-3 text-sm leading-relaxed" style="color: var(--color-gray);">
+            <p>
+              <strong style="color: var(--color-black);">Address</strong><br />
+              1425 Purdue<br />St. Louis, MO 63130
+            </p>
+            <p>
+              <strong style="color: var(--color-black);">Email</strong><br />
+              <a href="mailto:support@sparkman.com" class="hover:text-[var(--color-gold)] transition-colors">
+                support@sparkman.com
+              </a>
+            </p>
+            <p>
+              <strong style="color: var(--color-black);">Phone</strong><br />
+              <a href="tel:3142857037" class="hover:text-[var(--color-gold)] transition-colors">
+                314-285-7037
+              </a>
+            </p>
+          </address>
+
+          <!-- Subscribe anchor -->
+          <div
+            id="subscribe"
+            class="mt-10 p-6 rounded-lg"
+            style="background-color: var(--color-charcoal);"
+          >
+            <h3
+              class="text-lg font-bold mb-2"
+              style="font-family: var(--font-display); color: var(--color-gold);"
+            >
+              Subscribe Free
+            </h3>
+            <p class="text-sm mb-4" style="color: #CCC;">
+              Stay connected with the St. Louis faith community. New editions delivered to your inbox.
+            </p>
+            <!-- Phase 2: wire up to a real email service (Mailchimp, ConvertKit, etc.) -->
+            <p class="text-xs" style="color: #888;">
+              Newsletter integration coming soon. In the meantime, email us at
+              <a href="mailto:support@sparkman.com" class="underline hover:text-[var(--color-gold)]" style="color: #AAA;">
+                support@sparkman.com
+              </a>
+              to subscribe.
+            </p>
+          </div>
+        </div>
+
+        <!-- Contact form -->
+        <div>
+          <h2 class="text-xl font-bold mb-6" style="font-family: var(--font-display); color: var(--color-black);">
+            Send a Message
+          </h2>
+          <!-- Phase 2: replace with a proper form backend (Netlify Forms, Formspree, etc.) -->
+          <form
+            action="https://formspree.io/f/REPLACE_WITH_ID"
+            method="POST"
+            class="space-y-4"
+          >
+            <div>
+              <label class="block text-sm font-semibold mb-1" style="color: var(--color-black);" for="name">
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="w-full px-4 py-2 rounded border text-sm"
+                style="border-color: var(--color-gray-light); background: var(--color-white); color: var(--color-black);"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold mb-1" style="color: var(--color-black);" for="email">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="w-full px-4 py-2 rounded border text-sm"
+                style="border-color: var(--color-gray-light); background: var(--color-white); color: var(--color-black);"
+              />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold mb-1" style="color: var(--color-black);" for="message">
+                Message
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                rows="5"
+                required
+                class="w-full px-4 py-2 rounded border text-sm resize-none"
+                style="border-color: var(--color-gray-light); background: var(--color-white); color: var(--color-black);"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              class="w-full py-3 rounded font-semibold text-sm transition-opacity hover:opacity-90"
+              style="background-color: var(--color-gold); color: var(--color-black);"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

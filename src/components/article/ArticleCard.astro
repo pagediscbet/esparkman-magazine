@@ -1,0 +1,95 @@
+---
+interface Props {
+  title: string;
+  author: string;
+  authorImage?: string;
+  date: Date;
+  category: string;
+  excerpt: string;
+  image?: string;
+  slug: string;
+}
+
+const { title, author, authorImage, date, category, excerpt, image, slug } = Astro.props;
+
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+  month: 'long',
+  day: 'numeric',
+  year: 'numeric',
+}).format(date);
+
+const categoryLabel: Record<string, string> = {
+  'faith': 'Faith',
+  'job-talk': 'Job Talk',
+  'community-care': 'Community Care',
+  'testimonies': 'Testimonies',
+  'black-history': 'Black History',
+  'technology': 'Technology',
+};
+---
+
+<article
+  class="group flex flex-col rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+  style="background-color: var(--color-white); border: 1px solid var(--color-gray-light);"
+>
+  <!-- Card image -->
+  <a href={`/${category}/${slug}`} class="block overflow-hidden aspect-video" tabindex="-1" aria-hidden="true">
+    {image ? (
+      <img
+        src={image}
+        alt={title}
+        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+      />
+    ) : (
+      <div
+        class="w-full h-full flex items-center justify-center"
+        style="background-color: var(--color-charcoal);"
+      >
+        <span class="text-4xl" style="color: var(--color-gold);">✦</span>
+      </div>
+    )}
+  </a>
+
+  <!-- Card body -->
+  <div class="flex flex-col flex-1 p-5">
+    <!-- Category -->
+    <a
+      href={`/${category}`}
+      class="text-xs font-semibold uppercase tracking-widest mb-2 hover:opacity-80 transition-opacity"
+      style="color: var(--color-gold);"
+    >
+      {categoryLabel[category] ?? category}
+    </a>
+
+    <!-- Title -->
+    <h2 class="text-lg font-bold leading-snug mb-3 flex-1" style="font-family: var(--font-display);">
+      <a
+        href={`/${category}/${slug}`}
+        class="hover:text-[var(--color-red)] transition-colors"
+        style="color: var(--color-black);"
+      >
+        {title}
+      </a>
+    </h2>
+
+    <!-- Excerpt -->
+    <p class="text-sm leading-relaxed mb-4 line-clamp-3" style="color: var(--color-gray);">
+      {excerpt}
+    </p>
+
+    <!-- Author + date -->
+    <div class="flex items-center gap-3 mt-auto pt-4 border-t" style="border-color: var(--color-gray-light);">
+      {authorImage && (
+        <img
+          src={authorImage}
+          alt={author}
+          class="w-8 h-8 rounded-full object-cover flex-shrink-0"
+        />
+      )}
+      <div class="min-w-0">
+        <p class="text-xs font-semibold truncate" style="color: var(--color-black);">{author}</p>
+        <p class="text-xs" style="color: var(--color-gray);">{formattedDate}</p>
+      </div>
+    </div>
+  </div>
+</article>

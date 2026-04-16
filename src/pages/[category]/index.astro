@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArticleGrid from '../../components/article/ArticleGrid.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const categories = ['faith', 'job-talk', 'community-care', 'testimonies', 'black-history', 'technology'];
+  return categories.map(category => ({ params: { category } }));
+}
+
+const { category } = Astro.params;
+
+const categoryLabel: Record<string, string> = {
+  'faith': 'Faith',
+  'job-talk': 'Job Talk',
+  'community-care': 'Community Care',
+  'testimonies': 'Testimonies',
+  'black-history': 'Black History',
+  'technology': 'Technology',
+};
+
+const allArticles = await getCollection('articles');
+const categoryArticles = allArticles
+  .filter(a => a.data.category === category)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const label = categoryLabel[category!] ?? category!;
+---
+
+<BaseLayout title={label} description={`Browse all ${label} articles from E-Sparkman Magazine.`}>
+
+  <section class="py-16 px-6" style="background-color: var(--color-cream);">
+    <div class="mx-auto" style="max-width: var(--max-width);">
+
+      <a
+        href="/"
+        class="text-xs font-semibold uppercase tracking-widest mb-3 inline-block hover:opacity-80 transition-opacity"
+        style="color: var(--color-gray);"
+      >
+        ← Home
+      </a>
+      <h1
+        class="text-4xl font-bold mb-12"
+        style="font-family: var(--font-display); color: var(--color-black);"
+      >
+        {label}
+      </h1>
+
+      {categoryArticles.length > 0 ? (
+        <ArticleGrid articles={categoryArticles} />
+      ) : (
+        <p class="text-center py-24" style="color: var(--color-gray);">
+          No articles in this section yet. Check back soon.
+        </p>
+      )}
+
+    </div>
+  </section>
+
+</BaseLayout>

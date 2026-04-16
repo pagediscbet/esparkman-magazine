@@ -1,0 +1,51 @@
+---
+import '../styles/global.css';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const {
+  title,
+  description = 'E-Sparkman Magazine — A free Christian community digital magazine serving the St. Louis area.',
+  image = '/images/og-default.jpg',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
+    <title>{title} | E-Sparkman Magazine</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={`${title} | E-Sparkman Magazine`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:url" content={canonicalURL} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} | E-Sparkman Magazine`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
